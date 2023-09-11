@@ -309,7 +309,6 @@ r.ft('idx-employees').aggregate(aggregations.AggregateRequest("@skills:{python}"
 # TFUNCTION LOAD "<library-code>"
 # O(1)
 # Load a new JavaScript library into Redis.
-
 r.tfunction_load(
     "#!js api_version=1.0 name=cheatSheet\n redis.registerFunction('hello', (client, data)=>{return `Hello ${JSON.parse(data).name}`})", replace=True)
 # b'OK'
