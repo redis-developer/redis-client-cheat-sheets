@@ -1,3 +1,10 @@
+##################
+# redis-py Cheat Sheet
+#
+# This cheat sheet covers a number of commonly used Redis commands.
+# Before starting, Bulk upload the employee.redis file to your database
+##################
+
 import redis
 import json
 from redis.commands.search.query import NumericFilter, Query
@@ -68,7 +75,6 @@ r.expire('mykey', 10)
 # Iterates the set of keys in the currently selected Redis database.
 r.delete('mykey', 'mykey2')
 # 2
-# Bulk upload employee.redis
 r.scan(0, match='employee_profile:*')
 # (38, [b'employee_profile:viraj', b'employee_profile:terry', b'employee_profile:sheera', b'employee_profile:arun', b'employee_profile:neil', b'employee_profile:pari', b'employee_profile:aaron', b'employee_profile:nike', b'employee_profile:samt', b'employee_profile:simon'])
 r.scan(38, match='employee_profile:*')
@@ -304,12 +310,13 @@ r.ft('idx-employees').aggregate(aggregations.AggregateRequest("@skills:{python}"
 # O(1)
 # Load a new JavaScript library into Redis.
 
-r.tfunction_load("#!js api_version=1.0 name=cheatSheet\n redis.registerFunction('hello', (client, data)=>{return `Hello ${JSON.parse(data).name}`})", replace=True)
+r.tfunction_load(
+    "#!js api_version=1.0 name=cheatSheet\n redis.registerFunction('hello', (client, data)=>{return `Hello ${JSON.parse(data).name}`})", replace=True)
 # b'OK'
 r.tfunction_list(verbose=1)
 # [[b'api_version', b'1.0', b'cluster_functions', [], b'configuration', None, b'engine', b'js', b'functions', [[b'description', None, b'flags', [], b'is_async', 0, b'name', b'hello']], b'keyspace_triggers', [], b'name', b'lib', b'pending_async_calls', [], b'pending_jobs', 0, b'stream_triggers', [], b'user', b'default']]
 
 # TFCALL <function-name> <key> <args...>
-person = { 'name': 'Nicol' }
+person = {'name': 'Nicol'}
 args = json.dumps(person).encode('utf-8')
 r.tfcall('cheatSheet', 'hello', None, args)
