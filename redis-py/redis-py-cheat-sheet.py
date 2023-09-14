@@ -12,7 +12,6 @@ from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.field import TextField, NumericField, TagField
 import redis.commands.search.reducers as reducers
 import redis.commands.search.aggregation as aggregations
-from redis.commands.json.path import Path
 
 r = redis.Redis(host='localhost', port=6379, db=0)
 
