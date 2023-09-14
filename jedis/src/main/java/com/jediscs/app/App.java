@@ -282,6 +282,18 @@ public class App {
         jedis.jsonArrIndex("employee_profile:nicol", Path2.of("$.skills"), "\"java\"");
         // [-1]
 
+        /**
+         * Search and Query
+         */
+
+        // FT._LIST
+        // O(1)
+        // Returns a list of all existing indexes.
+        System.out.println(jedis.ftList());
+        // [index]
+
+        // FT.CREATE index [ON hash-key] [PREFIX n] SCHEMA [field type [field type ...]]
+
         jedis.close();
     }
 }
