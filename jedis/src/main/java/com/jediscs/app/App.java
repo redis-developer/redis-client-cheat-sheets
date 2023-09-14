@@ -9,7 +9,6 @@ package com.jediscs.app;
 
 import static java.util.Collections.singletonMap;
 
-import java.util.List;
 import java.util.Map;
 
 import redis.clients.jedis.JedisPooled;
@@ -24,7 +23,6 @@ import redis.clients.jedis.search.IndexOptions;
 import redis.clients.jedis.search.Schema;
 import redis.clients.jedis.search.FTSearchParams.NumericFilter;
 import redis.clients.jedis.search.aggr.AggregationBuilder;
-import redis.clients.jedis.search.aggr.Reducer;
 import redis.clients.jedis.search.aggr.Reducers;
 import redis.clients.jedis.search.aggr.SortedField;
 import redis.clients.jedis.search.aggr.SortedField.SortOrder;
@@ -449,9 +447,9 @@ public class App {
         // {age=24, count=1}, {age=30, count=1}, {age=40, count=1}, {age=41, count=2},
         // {age=42, count=1}, {age=43, count=4}]
 
-        System.out.println(jedis.ftAggregate("idx-employees", new AggregationBuilder("@skills:{python}")
+        jedis.ftAggregate("idx-employees", new AggregationBuilder("@skills:{python}")
                 .groupBy("@skills", Reducers.to_list("@name").as("names")))
-                .getRows());
+                .getRows();
         // [{skills=python, names=[Nicol, karol]}]
 
         jedis.close();
