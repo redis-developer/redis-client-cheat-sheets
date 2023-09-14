@@ -253,11 +253,16 @@ r.json().arrindex('employee_profile:nicol', '$.skills', 'java')
 # Search and Query
 ##################
 
-# FT.CREATE index [ON hash-key] [PREFIX n] SCHEMA [field type [field type ...]]
+try:
+    r.ft('idx-employees').dropindex()
+except:
+    pass
+
+# FT.CREATE index [ON HASH | JSON] [PREFIX count prefix [prefix ...]] SCHEMA field_name [AS alias] TEXT | TAG | NUMERIC | GEO | VECTOR | GEOSHAP [SORTABLE [UNF]] [NOINDEX] [ field_name [AS alias] TEXT | TAG | NUMERIC | GEO | VECTOR | GEOSHAPE [ SORTABLE [UNF]] [NOINDEX] ...]
 # O(K) where K is the number of fields in the document, O(N) for keys in the keyspace
-# Creates a new search index with the given spec.
+# Creates a new search index with the given specification.
 schema = (TextField('$.name', as_name='name', sortable=True), NumericField('$.age', as_name='age', sortable=True),
-          TagField('$.single', as_name='single'), TagField('$.skills', as_name='skills'))
+          TagField('$.single', as_name='single'), TagField('$.skills[*]', as_name='skills'))
 
 r.ft('idx-employees').create_index(schema, definition=IndexDefinition(
     prefix=['employee_profile:'], index_type=IndexType.JSON))
@@ -275,7 +280,7 @@ r.ft('idx-employees').info()
 r.ft('idx-employees').search('Nicol')
 # Result{1 total, docs: [Document {'id': 'employee_profile:nicol', 'payload': None, 'json': '{"name":"Nicol","age":24,"single":true,"skills":[]}'}]}
 
-r.ft('idx-employees').search("@single:{true}")
+r.ft('idx-employees').search("@single:{false}")
 # Result{7 total, docs: [Document {'id': 'employee_profile:sam', 'payload': None, 'json': '{"name":"sam","age":41,"single":false,"skills":[]}'}, Document {'id': 'employee_profile:cherry', 'payload': None, 'json': '{"name":"cherry","age":49,"single":false,"skills":[]}'}, Document {'id': 'employee_profile:akash', 'payload': None, 'json': '{"name":"akash","age":70,"single":false,"skills":[]}'}, Document {'id': 'employee_profile:saint', 'payload': None, 'json': '{"name":"saint","age":43,"single":false,"skills":[]}'}, Document {'id': 'employee_profile:peter', 'payload': None, 'json': '{"name":"peter","age":43,"single":false,"skills":[]}'}, Document {'id': 'employee_profile:nike', 'payload': None, 'json': '{"name":"nike","age":46,"single":false,"skills":[]}'}, Document {'id': 'employee_profile:alexa', 'payload': None, 'json': '{"name":"alexa","age":45,"single":false,"skills":[]}'}]}
 
 r.ft('idx-employees').search("@skills:{python}")
