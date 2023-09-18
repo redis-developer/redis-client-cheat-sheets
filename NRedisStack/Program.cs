@@ -103,23 +103,6 @@ namespace NRedisStack
              */
             db.KeyDelete(new RedisKey[] { "mykey", "mykey2" });
             redis.GetServer("localhost:6379").Keys(-1, "employee_profile:*", 10);
-            // jedis.del("mykey", "mykey2");
-            // 2;
-            // ScanResult<String> scan = jedis.scan("0", new ScanParams() {
-            //             {
-            //                 match("employee_profile:*");
-            //             }
-            //         });
-            //         // [employee_profile:viraj, employee_profile:terry, employee_profile:sheera,
-            //         // employee_profile:arun, employee_profile:neil, employee_profile:pari,
-            //         // employee_profile:aaron, employee_profile:nike, employee_profile:samt,
-            //         // employee_profile:simon]
-            //         // scan = jedis.scan(scan.getCursor(), new ScanParams()
-            //     {
-            //         {
-            //             match("employee_profile:*");
-            //     }
-            // });
             // [employee_profile:nicol, employee_profile:akash,
             // employee_profile:mano,employee_profile:alexa, employee_profile:ashu,
             // employee_profile:karol, employee_profile:carol, employee_profile:sunny,
