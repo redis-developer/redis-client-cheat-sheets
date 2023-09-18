@@ -320,6 +320,7 @@ r.tfunction_list(verbose=1)
 # [[b'api_version', b'1.0', b'cluster_functions', [], b'configuration', None, b'engine', b'js', b'functions', [[b'description', None, b'flags', [], b'is_async', 0, b'name', b'hello']], b'keyspace_triggers', [], b'name', b'lib', b'pending_async_calls', [], b'pending_jobs', 0, b'stream_triggers', [], b'user', b'default']]
 
 # TFCALL <function-name> <key> <args...>
+# Invoke a function.
 person = {'name': 'Nicol'}
 args = json.dumps(person).encode('utf-8')
 r.tfcall('cheatSheet', 'hello', None, args)
