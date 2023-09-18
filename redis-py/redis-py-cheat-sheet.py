@@ -74,9 +74,9 @@ r.expire('mykey', 10)
 # Iterates the set of keys in the currently selected Redis database.
 r.delete('mykey', 'mykey2')
 # 2
-r.scan(0, match='employee_profile:*')
+scanResult = r.scan(0, match='employee_profile:*')
 # (38, [b'employee_profile:viraj', b'employee_profile:terry', b'employee_profile:sheera', b'employee_profile:arun', b'employee_profile:neil', b'employee_profile:pari', b'employee_profile:aaron', b'employee_profile:nike', b'employee_profile:samt', b'employee_profile:simon'])
-r.scan(38, match='employee_profile:*')
+r.scan(scanResult[0], match='employee_profile:*')
 # (57, [b'employee_profile:nicol', b'employee_profile:akash', b'employee_profile:mano', b'employee_profile:alexa', b'employee_profile:ashu', b'employee_profile:karol', b'employee_profile:carol', b'employee_profile:sunny', b'employee_profile:peter', b'employee_profile:katie'])
 
 # DEL key [key ...]
